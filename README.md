@@ -1,11 +1,11 @@
-# d-load
+# derby-load
 Derby plugin for direct route component matching, using component's load fn to do route tasks
 
 How to use
 ==========
 In your app's base file (index.js in app root), activate the plugin in a non-Derby-standard way:
 ```javascript
-require('d-load')(app);
+require('derby-load')(app);
 ```
 
 Then, use route methods either as usual, e.g.:
