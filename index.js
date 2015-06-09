@@ -27,9 +27,11 @@ module.exports = function (app) {
 
       app['_' + method].call(this, pattern, function (page, model, params, next) {
         var viewName = viewName || component.prototype.name;
+        // 'get' collides with Derby-level defined method already on component's constructor (prototype), thus, use load instead of get and use the method for the remaining
+        var _method = (method === 'get' ? 'load' : method);
 
         // No load fn existed, let's just render
-        if(!component.prototype[method]) return page.render(viewName);
+        if(!component.prototype[_method]) return page.render(viewName);
 
         // Overwrite page in order to be able to overwrite the render fn to 
         var _page = _.clone(page);
@@ -40,7 +42,7 @@ module.exports = function (app) {
           page.render(ns);
         };
 
-        component.prototype[method].call(this, _page, model, params, next);
+        component.prototype[_method].call(this, _page, model, params, next);
       });
     }
   });
